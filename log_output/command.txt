@@ -1,0 +1,5 @@
+docker build -t log_output .
+k3d image import log_output:latest -c k3s-default
+kubectl create deployment logoutput-dep --image=log_output:latest
+kubectl patch deployment logoutput-dep --type=json -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/imagePullPolicy", "value": "IfNotPresent"}]'
+kubectl get pods
