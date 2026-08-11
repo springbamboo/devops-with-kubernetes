@@ -1,0 +1,7 @@
+k3d cluster start
+docker build -t todo-app .
+k3d image import todo-app:latest -c k3s-default
+kubectl create deployment todoapp-dep --image=todo-app:latest
+kubectl patch deployment todoapp-dep --type=json -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/imagePullPolicy", "value": "IfNotPresent"}]'
+kubectl get pods
+kubectl logs -f -l app=logoutput-dep
