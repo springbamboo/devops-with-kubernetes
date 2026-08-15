@@ -1,12 +1,21 @@
 import { randomBytes } from 'node:crypto';
+import express from 'express';
+
+const app = express();
+
+const PORT = 3000;
 
 const generateAndPrint = () => {
   let currentRandomString = randomBytes(16).toString('hex');
 
   const timestamp = new Date().toISOString();
-  console.log(`[${timestamp}] ${currentRandomString}`);
+  return `[${timestamp}] ${currentRandomString}`;
 };
 
-generateAndPrint();
+app.get('/', (req, res) => {
+  return res.send(generateAndPrint());
+});
 
-setInterval(generateAndPrint, 5000);
+app.listen(PORT, () => {
+  console.log(`Server started at ${PORT}`);
+});
