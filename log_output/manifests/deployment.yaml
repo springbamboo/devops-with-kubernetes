@@ -12,7 +12,20 @@ spec:
       labels:
         app: logoutput
     spec:
+      volumes:
+        - name: shared-logs
+          emptyDir: {}
       containers:
-        - name: logoutput
-          image: log_output:latest
+        - name: log-writer
+          image: log_writer:latest
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /usr/src/app/files
           imagePullPolicy: IfNotPresent
+        - name: log-reader
+          image: log_reader:latest
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /usr/src/app/files
+          imagePullPolicy: IfNotPresent
+       
