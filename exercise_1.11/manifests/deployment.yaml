@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pingpong-log
+  name: pingpong-log
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong-log
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: pingpong-log
+    spec:
+      volumes:
+        - name: shared-file
+          persistentVolumeClaim:
+            claimName: pingpong-log-pvclaim
+      containers:
+      - image: ping_pong:latest
+        imagePullPolicy: Never
+        name: ping-pong
+        env:
+        - name: PORT
+          value: "3000"
+        volumeMounts:
+          - name: shared-file
+            mountPath: /usr/src/app/file
+      - image: log_output:latest
+        imagePullPolicy: Never
+        name: log-output
+        env:
+        - name: PORT
+          value: "3001"
+        volumeMounts:
+          - name: shared-file
+            mountPath: /usr/src/app/file
+status: {}
