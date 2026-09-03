@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      containers:
+      - image: logoutput:latest
+        imagePullPolicy: Never
+        name: logtoutput
+        env:
+        - name: PORT
+          value: "3000"
+        - name: PINGPONG_URL
+          value: "http://pingpong-svc:2346"
