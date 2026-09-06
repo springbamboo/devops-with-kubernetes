@@ -3,13 +3,15 @@ import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
-import path from 'node:path';
+import { randomUUID } from 'node:crypto';
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-const filePath = path.join('/usr/src/app', 'files', 'image.jpg');
-// const filePath = __dirname + '/files/image.jpg';
+app.use(express.json());
+
+const filePath = '/usr/src/app/files/image.jpg';
+// const filePath = '/home/czw/devops-with-kubernetes/todo-app/files/image.jpg';
 const TEN_SECONDS = 10 * 1 * 1000;
 
 async function requestAndSaveImage() {
@@ -22,10 +24,6 @@ async function requestAndSaveImage() {
     fs.createWriteStream(filePath),
   );
 }
-
-app.get('/', (_req, res) => {
-  res.sendFile(path.join('/usr/src/app/', 'index.html'));
-});
 
 app.get('/api/image', async (_req, res) => {
   try {
@@ -42,6 +40,25 @@ app.get('/api/image', async (_req, res) => {
       res.status(500).send('error');
     }
   }
+});
+
+const todoList = [];
+
+app.post('/todos', async (req, res) => {
+  if (!req.body.task) {
+    return res.status(400).json({ message: 'task is required' });
+  }
+  const todo = {
+    task: req.body.task,
+    createdAt: new Date(),
+    id: randomUUID(),
+  };
+  todoList.push(todo);
+  return res.status(201).json(todo);
+});
+
+app.get('/todos', async (_req, res) => {
+  return res.status(200).json({ todos: todoList });
 });
 
 app.listen(PORT, () => {

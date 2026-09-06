@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
     <style>
         body {
@@ -74,22 +75,9 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>Todo App</h1>
-        <img src="/api/image" alt="Random Image" />
-
-        <div class="form-group">
-            <input type="text" placeholder="Enter a new todo (max 140 characters)" maxlength="140" />
-            <button>Send</button>
-        </div>
-
-        <h2>Todos</h2>
-        <div class="todo-list">
-            <div class="todo-item">Learn Kubernetes basics</div>
-            <div class="todo-item">Deploy application to cluster</div>
-            <div class="todo-item">Configure persistent volumes</div>
-        </div>
+    <div id="app">
     </div>
+    <script type="module" src="./src/main.jsx"></script>
 </body>
 
 </html>
