@@ -10,12 +10,12 @@ const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 
-const filePath = '/usr/src/app/files/image.jpg';
+const filePath = process.env.IMAGE_FILE_PATH;
 // const filePath = '/home/czw/devops-with-kubernetes/todo-app/files/image.jpg';
-const TEN_SECONDS = 10 * 1 * 1000;
+const TEN_SECONDS = process.env.TIME_TEN_SECONDS;
 
 async function requestAndSaveImage() {
-  const response = await fetch('https://picsum.photos/1200');
+  const response = await fetch(process.env.REQUEST_IMAGE_URL);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }

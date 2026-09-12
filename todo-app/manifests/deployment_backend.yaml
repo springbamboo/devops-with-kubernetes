@@ -26,4 +26,22 @@ spec:
             mountPath: /usr/src/app/files
           env:
             - name: PORT
-              value: "5001"
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: PORT
+            - name: IMAGE_FILE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: IMAGE_FILE_PATH
+            - name: REQUEST_IMAGE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: REQUEST_IMAGE_URL
+            - name: TIME_TEN_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: TIME_TEN_SECONDS

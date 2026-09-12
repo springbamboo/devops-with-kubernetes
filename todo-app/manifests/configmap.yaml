@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-configmap
+data:
+  PORT: "5001"
+  IMAGE_FILE_PATH: "/usr/src/app/files/image.jpg"
+  REQUEST_IMAGE_URL: "https://picsum.photos/1200"
+  TIME_TEN_SECONDS: "10000"
