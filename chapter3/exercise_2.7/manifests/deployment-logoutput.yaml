@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+  namespace: exercises
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      containers:
+      - image: logoutput:latest
+        imagePullPolicy: Never
+        name: logoutput
+        env:
+        - name: PORT
+          value: "3000"
+        - name: PINGPONG_URL
+          value: "http://pingpong-svc:2346"
+        - name: FILE_PATH
+          value: "/usr/src/app/files"
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: logoutput-configmap
+              key: MESSAGE
+        volumeMounts:
+          - name: config-volume
+            mountPath: /usr/src/app/files
+            readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: logoutput-configmap
+            items:
+              - key: information.txt
+                path: information.txt
