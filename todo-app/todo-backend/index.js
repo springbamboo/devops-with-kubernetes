@@ -3,7 +3,9 @@ import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
-import { randomUUID } from 'node:crypto';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -42,23 +44,32 @@ app.get('/api/image', async (_req, res) => {
   }
 });
 
-const todoList = [];
-
 app.post('/todos', async (req, res) => {
-  if (!req.body.task) {
-    return res.status(400).json({ message: 'task is required' });
+  try {
+    if (!req.body) {
+      return res.status(400).json({ message: 'task is required' });
+    }
+    const todo = await prisma.task.create({
+      data: {
+        task: req.body.task,
+      },
+    });
+
+    return res.status(201).json(todo);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
-  const todo = {
-    task: req.body.task,
-    createdAt: new Date(),
-    id: randomUUID(),
-  };
-  todoList.push(todo);
-  return res.status(201).json(todo);
 });
 
 app.get('/todos', async (_req, res) => {
-  return res.status(200).json({ todos: todoList });
+  try {
+    const result = await prisma.task.findMany();
+    return res.status(200).json({ todos: result });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 app.listen(PORT, () => {

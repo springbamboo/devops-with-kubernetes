@@ -45,3 +45,9 @@ spec:
                 configMapKeyRef:
                   name: todo-configmap
                   key: TIME_TEN_SECONDS
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: DATABASE_URL
+              

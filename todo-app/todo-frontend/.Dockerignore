@@ -4,3 +4,5 @@ node_modules/
 .gitignore
 Dockerfile
 .dockerignore
+test.rest
+

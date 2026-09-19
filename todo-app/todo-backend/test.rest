@@ -11,5 +11,5 @@ POST {{baseUrl}}/todos
 Content-Type: application/json
 
 {
-	"task": "Learn Kubernetes"
+	"taskName": "Learn Kubernetes"
 }
