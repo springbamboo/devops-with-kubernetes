@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: getwikiurl-job
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: getwikiurl-job
+            image: getwikiurl-job:latest
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: wikiUrl
+                valueFrom:
+                  configMapKeyRef:
+                    name: todo-configmap
+                    key: wikiUrl
+              - name: todoUrl
+                valueFrom:
+                  configMapKeyRef:
+                    name: todo-configmap
+                    key: todoUrl

@@ -8,3 +8,6 @@ data:
   REQUEST_IMAGE_URL: "https://picsum.photos/1200"
   TIME_TEN_SECONDS: "10000"
   DATABASE_URL: "postgresql://postgres:example@postgres-svc:5432/postgres"
+  wikiUrl: "https://en.wikipedia.org/wiki/Special:Random"
+  todoUrl: "http://todo-backend-svc:1234/todos" 
+  

@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:5001
+@baseUrl = http://localhost:8081
 
 ### 
 GET {{baseUrl}}/api/image
@@ -11,5 +11,5 @@ POST {{baseUrl}}/todos
 Content-Type: application/json
 
 {
-	"taskName": "Learn Kubernetes"
+	"task": "Learn Kubernetes"
 }
