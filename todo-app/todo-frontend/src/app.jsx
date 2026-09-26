@@ -64,7 +64,6 @@ const TodoSubmitForm = ({ onTodoCreated }) => {
       <input
         type="text"
         placeholder="Enter a new todo (max 140 characters)"
-        maxlength="140"
         value={task}
         onInput={(event) => setTask(event.currentTarget.value)}
       />

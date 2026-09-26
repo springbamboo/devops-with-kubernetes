@@ -46,9 +46,20 @@ app.get('/api/image', async (_req, res) => {
 
 app.post('/todos', async (req, res) => {
   try {
-    if (!req.body) {
+    if (!req.body || !req.body.task) {
       return res.status(400).json({ message: 'task is required' });
     }
+    if (req.body.task.length > 140) {
+      console.log(
+        `Rejected todo due to length (${req.body.task.length} chars): ${req.body.task}`,
+      );
+      return res
+        .status(400)
+        .json({ message: 'Task exceeds the 140 character limit' });
+    }
+
+    console.log(`Creating new todo: ${req.body.task}`);
+
     const todo = await prisma.task.create({
       data: {
         task: req.body.task,

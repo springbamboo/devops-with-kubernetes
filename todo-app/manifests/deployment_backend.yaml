@@ -21,6 +21,13 @@ spec:
         - name: todo-backend
           image: todo-backend:latest
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
           volumeMounts:
           - name: shared-image
             mountPath: /usr/src/app/files
