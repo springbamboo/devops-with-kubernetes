@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+spec:
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      containers:
+      - name: logoutput
+        image: czczw/logoutput:latest
+        ports:
+        - containerPort: 3000
+        env:   
+        - name: PORT               
+          value: "3000"
+        - name: PINGPONG_URL
+          value: "http://pingpong-svc:1234"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
